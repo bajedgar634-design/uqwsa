@@ -1,19 +1,19 @@
-name: Python quality
-on:
+name: Python quality   # Имя workflow, отображается во вкладке Actions
+on:                    # События запуска: push в main, pull_request, workflow_dispatch
   push:
     branches: [main]
   pull_request:
   workflow_dispatch:
-permissions:
+permissions:           # Права токена: contents: read — только чтение
   contents: read
-jobs:
+jobs:                  # Набор задач; здесь одна задача tests
   tests:
-    runs-on: ubuntu-latest
-    strategy:
+    runs-on: ubuntu-latest    # Среда выполнения: ubuntu-latest
+    strategy:          # Стратегия матрицы: fail-fast: false — не отменять остальные jobs при падении
       fail-fast: false
-      matrix:
+      matrix:          # Варианты окружения: python-version: ["3.11", "3.12"]
         python-version: ["3.11", "3.12"]
-    steps:
+    steps:             # Последовательность шагов: checkout → setup-python → show version → run tests
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
